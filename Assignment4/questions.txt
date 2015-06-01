@@ -1,2 +1,2 @@
-1. Do you want to pass multiple delimitors as sentence separators to the tool?
-2. Can you please detail the various failure crietrias that you want to consider and pass an error message back to the user?
+1. Do you want to pass multiple delimiters as sentence separators to the tool?
+2. Can you please detail the various failure criterias that you want to consider and pass an error message back to the user?
