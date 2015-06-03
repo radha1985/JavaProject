@@ -1,2 +1,7 @@
 1. Do you want to pass multiple delimiters as sentence separators to the tool?
+
+YES
+
 2. Can you please detail the various failure criterias that you want to consider and pass an error message back to the user?
+
+A: I'm not a technical person, so I'm not sure of what could go wrong when running this program besides a student misspelling the name of the file or specifying the wrong parameters. What I care for is that, in case of errors, the program prints a user-friendly diagnostic message. Just be sure to document your decisions.
