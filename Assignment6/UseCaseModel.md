@@ -6,7 +6,7 @@
 
 ![UseCaseDiagram](UseCasediagram.png)
 
-Click on the link to view the [UseCaseDiagram](UseCaseDiagram.pdf) 
+Click on the link to view the [UseCaseDiagram](UsecaseDiagram.pdf) 
 
 ## 2 Use Case Descriptions
 
