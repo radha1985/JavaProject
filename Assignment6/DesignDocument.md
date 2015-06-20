@@ -78,6 +78,6 @@ Click on the link to view the [State Transition Diagram](StateDiagram.pdf)
 
 ## 4 User Interface Design
 
-![userinterfacedesign](userinterfacedesign.png)
+![userinterfacedesign](UserInterfaceDesign.png)
 
-Click on the link  to view the [User Interface Design](userinterfacedesign.pdf). 
+Click on the link  to view the [User Interface Design](UserInterfaceDesign.pdf). 
