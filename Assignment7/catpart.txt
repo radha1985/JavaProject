@@ -1,0 +1,86 @@
+# File
+  Size of the file:
+      Empty.		      [single][property emptyfile] 
+      Not empty.
+  Number of delimiters in the file:
+      None.		      [single]  [if !emptyfile] 
+      One.		                [if !emptyfile]
+      Many.		      [single]  [if !emptyfile]      
+
+# Delimiter
+  Default delimiter without specifying -d option:
+      Tab.	              [single][property default]      
+      None.
+  Number of Delimiters mentioned with -d option:
+      Empty.	              [error]	
+      One.		             [if !default]  	
+      More than one.          [error]         
+  Character used as field Delimiter:
+      Space.                  [single][if !default]
+      any delimiter.                  [if !default]
+                          
+              
+# Field
+  Value of Field:
+      Empty.	                [error] 
+      Single Index.		           [property singleindex]        
+      Multiple Indexes separated by comma. [property multipleindex]              
+      Single Range.		           [property singlerange]           
+      Multiple Ranges separated by comma.  [property multiplerange]
+      Index and Range combo.               [property indexrangecombo] 
+  Content of Field:
+      alphanumeric characters.  [error]
+      special characters.       [error]
+      spaces.                   [error]
+      numerics.                        
+  Order of the numbers in a Field:
+      ascending.		  [if multipleindex || multiplerange || indexrangecombo]      
+      descending.		  [if multipleindex || multiplerange || indexrangecombo]   
+      None.                       [if singleindex || singlerange]
+      
+  Index in a Field:
+      None.	                      [if singlerange || multiplerange] 
+      One.		              [if singleindex || indexrangecombo]
+      Many.			      [if multipleindex || indexrangecombo]
+  Indexes separated by  comma:
+      None.                           [if singleindex || singlerange || multiplerange] 
+      Not separated.	              [if multipleindex || indexrangecombo] [error]
+      Separated.                      [if multipleindex || indexrangecombo]
+      Incorrect.              [error]
+  Presence of hyphen after an Index:
+      None.	                      
+      One.                    [error] 
+      Many.                   [error]           
+  Value for index:
+     >0.	                      [if singleindex || multipleindex || indexrangecombo]
+     <0.	              [error] 
+     0.		              [error]
+     maxint.                  [single][if singleindex || multipleindex || indexrangecombo] 
+     None.                            [if singlerange || multiplerange] 
+     
+  Range specified in a Field:
+      None.                            [if singleindex || multipleindex] 
+      One.	                       [if singlerange || indexrangecombo]
+      Many.	                       [if multiplerange || indexrangecombo]
+  Presence of hyphen in a range:
+      Not enclosed.	      [error] 
+      Enclosed.                       [if singlerange || multiplerange || indexrangecombo]
+      Incorrect.              [error]              
+      None.                           [if singleindex || multipleindex]
+  Value for range:
+     >0.	                      [if singlerange || multiplerange || indexrangecombo]
+     <0.	              [error] 
+     0.		              [error]
+     maxint.                  [single][if singlerange || multiplerange || indexrangecombo]          
+     None.                            [if singleindex || multipleindex] 
+  Ranges separated by  comma:
+      Not separated.	              [if multiplerange || indexrangecombo] [error]
+      Separated.                      [if multiplerange || indexrangecombo] 
+      Incorrect.              [error]
+      None.                           [if singlerange || singleindex || multipleindex]
+  
+# Filename
+  Presence of a file corresponding to the name:
+      Not present.            [error]		
+      Present.
+
