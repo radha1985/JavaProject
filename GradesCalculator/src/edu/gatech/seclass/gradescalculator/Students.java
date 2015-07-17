@@ -42,7 +42,7 @@ public class Students
 				}
 		       StudentInfo.add(ArrayRow);
 			}
-			//System.out.println(StudentInfo);	
+			
 			
 		XSSFSheet teamsheet = workbook.getSheetAt(1);
 		
@@ -64,15 +64,15 @@ public class Students
 				ArrayRow.add(data);
 			}
 			Teams.add(ArrayRow);
-		}
-		
-		//System.out.println(Teams);
+		}		
+		file.close();
+		System.gc();
     	}
+	
 		catch(Exception e){}
 		}
 	public ArrayList<ArrayList<String>> GetStudentInfo()
-	{	
-		//System.out.println(StudentInfo);
+	{
 		return StudentInfo;
 		
 	}

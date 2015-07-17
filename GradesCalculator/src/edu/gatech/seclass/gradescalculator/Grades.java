@@ -2,8 +2,10 @@ package edu.gatech.seclass.gradescalculator;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
-
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -118,6 +120,7 @@ public class Grades {
 
 			}
 			file.close();
+			System.gc();
 		}
 		catch(Exception e)
 		{
@@ -145,6 +148,63 @@ public class Grades {
 		return TeamGrades;
 	}	
 		
+	public void updateGradesDB(ArrayList<ArrayList<String>> NewGrades, ArrayList<ArrayList<String>> NewProjectGrades)
+	{
+		
+		try 
+		{
+		    FileInputStream infile = new FileInputStream(new File("DB/GradesDatabase6300-grades.xlsx"));
+		    
+		    XSSFWorkbook workbook = new XSSFWorkbook(infile);
+		    XSSFSheet sheet = workbook.getSheetAt(1);		    
+		    
+		    for (int i=0; i<NewGrades.size(); i++)
+		    {
+		    	for(int j=0;j<NewGrades.get(i).size();j++)
+		    	{
+		    		Cell cell = null;
+		    		cell = sheet.getRow(i).getCell(j);
+
+		    		if(cell == null)
+		    		{
+		    			sheet.getRow(i).createCell(j);
+		    			cell = sheet.getRow(i).getCell(j);
+		    		}
+
+		    		cell.setCellValue(NewGrades.get(i).get(j));
+		    	}
+		    }
+		    		    
+		   XSSFSheet sheet2 = workbook.getSheetAt(2);
+
+		    for (int i=0; i<NewProjectGrades.size(); i++)
+		    {
+		    	for(int j=0;j<NewProjectGrades.get(i).size();j++)
+		    	{
+		    		Cell cell = null;
+		    		cell = sheet2.getRow(i).getCell(j);
+		    		
+		    		if(cell == null)
+		    		{
+		    			sheet2.getRow(i).createCell(j);
+		    			cell=sheet2.getRow(i).getCell(j);
+		    		}
+		    		cell.setCellValue(NewProjectGrades.get(i).get(j));		    		
+		    	}
+		    }
+		    infile.close();
+		    FileOutputStream outFile1 = new FileOutputStream(new File(GradesDB));
+		    workbook.write(outFile1);	    
+		    outFile1.close();
+		    System.gc();
+		}
+		
+		 catch (FileNotFoundException e) {
+			    e.printStackTrace();}
+		 catch (IOException e) {
+			    e.printStackTrace();}
+	}
 }
+
 
 			
