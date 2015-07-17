@@ -58,7 +58,7 @@ public class Course
 
 	public int getNumProjects()
 	{
-		if(grades.GetIndividualContribs().size() > 0)
+		if(grades.GetTeamGrades().size() > 0)
 			return grades.GetTeamGrades().get(0).size()-1;
 		else
 			return 0;
