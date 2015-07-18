@@ -51,13 +51,11 @@ public class MyCourseTest {
     public void testAddStudent() {
         Student student1 = new Student(97,"Bryan Smith","923432321","Team3");     
         course.addStudent(student1);
-        course.updateStudents(new Students(STUDENTS_DB));
-        course.updateGrades(new Grades(GRADES_DB));
+        course.updateStudents(new Students(STUDENTS_DB));       
         assertEquals(17, course.getNumStudents());
         Student student2 = new Student(98,"Gladey Anton","989092313","Team1");
         course.addStudent(student2);
-        course.updateStudents(new Students(STUDENTS_DB));
-        course.updateGrades(new Grades(GRADES_DB));
+        course.updateStudents(new Students(STUDENTS_DB));       
         assertEquals(18, course.getNumStudents());
     }
 
