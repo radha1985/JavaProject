@@ -3,16 +3,22 @@ package edu.gatech.seclass.gradescalculator;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+
 public class Course 
 {   
 	HashSet<Student> studentsRost = new HashSet<Student>();
 	Students students;
 	Grades   grades;
+	Course   course;
+	String formula;
 	
 	public Course(Students students, Grades grades)
 	{
 		this.students = students;
 		this.grades = grades;	
+		formula = "AT * 0.2 + AA * 0.4 + AP * 0.4";
 				
 		for(int i=1;i<students.GetStudentInfo().size();i++)
 		{
@@ -20,7 +26,7 @@ public class Course
 			String gtid = students.GetStudentInfo().get(i).get(1);
 			String team = "";
 			int attendance=0;	
-			System.out.println();		
+				
 			for(int j=1; j<students.GetTeams().size(); j++)
 			{					
 				for(int k=1; k<students.GetTeams().get(j).size(); k++)
@@ -89,6 +95,16 @@ public class Course
 		Student student = null;
 		return student;
 	}
+	public int getAttendance(Student student) 
+	{		
+	 return student.getAttendance();
+	
+	}	
+	
+	public String getTeam(Student student) {
+		
+		return student.getTeam();
+	}	
 	
 	public void addAssignment(String assignmentName) 
 	{		
@@ -233,5 +249,62 @@ public class Course
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void setFormula(String formula) 
+	{
+		this.formula = formula;		
+	}
+	
+	public String getFormula() 
+	{
+		// TODO Auto-generated method stub
+		return this.formula;
+	}
+	
+	public String getEmail(Student student) 
+	{
+		for (int i =1; i < students.GetStudentInfo().size(); i++)
+		{
+			if(students.GetStudentInfo().get(i).get(0).equals(student.getName()))
+				return students.GetStudentInfo().get(i).get(2);
+		}
+		return "";	
+	}
+	public Object getOverallGrade(Student student) 
+	{
+		int attendance = 0;
+		
+		try
+		{				
+			for(int j=1; j<grades.GetAttendance().size(); j++)
+			{			
+				for(int k=0; k<grades.GetAttendance().get(j).size(); k++)
+				{
+					if(grades.GetAttendance().get(j).get(k).equals(student.getGtid()))					
+						attendance = Integer.parseInt(grades.GetAttendance().get(j).get(1));						
+				}
+			}	
 			
-}
+			int AT = attendance;
+			int AA = getAverageAssignmentsGrade(student);
+			int AP = getAverageProjectsGrade(student);			
+			
+			ScriptEngineManager manager = new ScriptEngineManager();
+			ScriptEngine engine = manager.getEngineByName("js");
+			
+			engine.put("AT", AT);
+			engine.put("AA", AA);
+			engine.put("AP", AP);			
+			
+			if(grades.getFormula() != null)
+				formula = grades.getFormula();			
+			
+			Object obj = engine.eval(formula);			
+			return (int)Math.round(Double.parseDouble(obj.toString()));
+		}
+		catch(Exception e)
+		{
+			throw new GradeFormulaException("Exception found for formula :" + formula);
+		}	
+	}	
+}	

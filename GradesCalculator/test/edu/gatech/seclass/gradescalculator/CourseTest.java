@@ -16,7 +16,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-
 public class CourseTest {
 
     Students students = null;
@@ -28,7 +27,7 @@ public class CourseTest {
     static final String STUDENTS_DB_GOLDEN = "DB" + File.separator + "GradesDatabase6300-students-goldenversion.xlsx";
     
     @Before
-    public void setUp() throws Exception {    	
+    public void setUp() throws Exception {
         FileSystem fs = FileSystems.getDefault();
         Path gradesdbfilegolden = fs.getPath(GRADES_DB_GOLDEN);
         Path gradesdbfile = fs.getPath(GRADES_DB);
@@ -46,9 +45,9 @@ public class CourseTest {
         students = null;
         grades = null;
         course = null;
-    }    
+    }
 
-   @Test
+    @Test
     public void testGetNumStudents1() {
         int numStudents = course.getNumStudents();
         assertEquals(16, numStudents);
@@ -99,7 +98,7 @@ public class CourseTest {
     public void testGetStudentsByName2() {
         Student student = null;
         student = course.getStudentByName("Coriander Alfsson");
-        assertEquals(98, student.getAttendance());
+        assertEquals(98, course.getAttendance(student));
     }
 
     @Test
@@ -111,13 +110,13 @@ public class CourseTest {
     @Test
     public void testGetTeam1() {
         Student student = course.getStudentByName("Genista Parrish");
-        assertEquals("Team 3", student.getTeam());
+        assertEquals("Team 3", course.getTeam(student));
     }
     
     // New tests
     @Test
     public void testAddAssignment() {
-        course.addAssignment("Assignment: category partition");
+        course.addAssignment("Assignment: black-box testing");
         course.updateGrades(new Grades(GRADES_DB));
         assertEquals(4, course.getNumAssignments());
         course.addAssignment("Assignment: white-box testing");
@@ -125,12 +124,12 @@ public class CourseTest {
         assertEquals(5, course.getNumAssignments());
     }
 
-   @Test
+    @Test
     public void testAddGradesForAssignment() {
         String assignmentName = "Assignment: category partition";
-        Student student1 = new Student("Josepha Jube", "901234502", course);
-        Student student2 = new Student("Christine Schaeffer", "901234508", course);
-        Student student3 = new Student("Ernesta Anderson", "901234510", course);
+        Student student1 = new Student("Josepha Jube", "901234502");
+        Student student2 = new Student("Christine Schaeffer", "901234508");
+        Student student3 = new Student("Ernesta Anderson", "901234510");
         course.addAssignment(assignmentName);
         course.updateGrades(new Grades(GRADES_DB));
         HashMap<Student, Integer> grades = new HashMap<Student, Integer>();
@@ -147,7 +146,7 @@ public class CourseTest {
     @Test
     public void testGetAverageAssignmentsGrade() {
         // Rounded to the closest integer
-        Student student = new Student("Ernesta Anderson", "901234510", course);
+        Student student = new Student("Ernesta Anderson", "901234510");
         // assertEquals(90, course.getAverageAssignmentsGrade(student), 1);
         assertEquals(90, course.getAverageAssignmentsGrade(student));
     }
@@ -155,16 +154,16 @@ public class CourseTest {
     @Test
     public void testGetAverageProjectsGrade() {
         // Rounded to the closest integer
-        Student student = new Student("Rastus Kight", "901234512", course);
+        Student student = new Student("Rastus Kight", "901234512");
         // assertEquals(86, course.getAverageProjectsGrade(student), 1);
         assertEquals(86, course.getAverageProjectsGrade(student));
     }
 
-   @Test
+    @Test
     public void testAddIndividualContributions() {
         String projectName1 = "Project 2";
-        Student student1 = new Student("Josepha Jube", "901234502", course);
-        Student student2 = new Student("Grier Nehling", "901234503", course);
+        Student student1 = new Student("Josepha Jube", "901234502");
+        Student student2 = new Student("Grier Nehling", "901234503");
         HashMap<Student, Integer> contributions1 = new HashMap<Student, Integer>();
         contributions1.put(student1, 96);
         contributions1.put(student2, 87);
@@ -178,6 +177,27 @@ public class CourseTest {
         course.updateGrades(new Grades(GRADES_DB));
         assertEquals(90, course.getAverageProjectsGrade(student1));
         assertEquals(84, course.getAverageProjectsGrade(student2));
+    }
+    
+    @Test
+    public void testFormulaUpdate1() {
+    	grades.setFormula("AA * .5 + AP * .5");
+        Student student = new Student("Kym Hiles", "901234507");
+        assertEquals(92, course.getOverallGrade(student));
+    }
+
+    @Test
+    public void testFormulaUpdate2() {
+    	grades.setFormula("99.5");
+        Student student = new Student("Genista Parrish", "901234509");
+        assertEquals(100, course.getOverallGrade(student));
+    }
+
+    @Test(expected = GradeFormulaException.class)
+    public void testFormulaUpdate3() {
+    	grades.setFormula("AT * 02 + AAA * 0.5 + AP * 0.3");
+        Student student = new Student("Genista Parrish", "901234509");
+        assertEquals(100, course.getOverallGrade(student));
     }
 }
     

@@ -24,6 +24,11 @@ public class Student {
 		
 	}
 
+	public Student(String name, String gtid) {
+		this.name = name;
+		this.gtid=gtid;		
+	}
+
 	public String getName()
 	{
 		return(this.name);
@@ -42,9 +47,7 @@ public class Student {
 	public String getTeam()
 	{
 		return(this.team);
-	}
-
-	
+	}	
 	public void setTeam(String team)
 	{
 		this.team = team;
@@ -53,7 +56,7 @@ public class Student {
 	{
 		this.gtid = gtid;
 	}
-	public void attendance(int attendance)
+	public void setAttendance(int attendance)
 	{
 		this.attendance = attendance;
 	}

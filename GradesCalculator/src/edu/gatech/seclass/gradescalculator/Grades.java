@@ -20,6 +20,7 @@ public class Grades {
 	ArrayList<ArrayList<String>> IndividualContribs = new ArrayList<ArrayList<String>>();
 	ArrayList<ArrayList<String>> TeamGrades = new ArrayList<ArrayList<String>>();
 	
+	String formula;
 	public Grades(String GradesDB)
 	{
 		this.GradesDB = GradesDB;
@@ -203,6 +204,14 @@ public class Grades {
 			    e.printStackTrace();}
 		 catch (IOException e) {
 			    e.printStackTrace();}
+	}
+	public void setFormula(String formula) 
+	{
+		this.formula = formula;
+	}
+	public String getFormula()
+	{
+		return formula;
 	}
 }
 
